@@ -1,23 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { StudentService } from '../student.service';
+import { Observable } from 'rxjs';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-student-list',
   standalone: true,
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './student-list.component.html',
   styleUrl: './student-list.component.css'
 })
-export class StudentListComponent {
-  students: Student[] = [{id: 1, nome: "Ciccio", cognome:"Pasticcio", linguaggioPreferito: "Javascript"},
-    {id: 2, nome: "Paolo", cognome: "Tavolo", linguaggioPreferito: "Java"},
-    {id: 3, nome: "Topo", cognome: "Gigio", linguaggioPreferito: "C++"}
-  ];
+export class StudentListComponent implements OnInit{
+  
+  students: Student[] = [];
   student = {id: 4, nome: "Pino", cognome: "Abete", linguaggioPreferito: "Python"};
   noData: string[] = [];
   age = 35;
+
+  constructor(private studentService : StudentService){}
+
+  ngOnInit(): void {
+    let obsStud: Observable<Student[]> = this.studentService.getStudents();
+    obsStud.subscribe(data => this.students = data);
+  }
 }
 
-interface Student{
+export interface Student{
   id: number,
   nome: string,
   cognome: string,

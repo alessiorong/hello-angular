@@ -4,5 +4,5 @@ import { StudentComponent } from './student/student.component';
 
 export const routes: Routes = [
     {path: '', component: StudentListComponent},
-    //{path: 'pasticcio', component: StudentComponent}
+    {path: 'student/:id', component: StudentComponent}
 ];
